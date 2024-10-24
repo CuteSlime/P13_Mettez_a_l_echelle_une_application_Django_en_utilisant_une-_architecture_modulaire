@@ -1,1 +1,4 @@
-from .models_lettings import *
+from .models_lettings import Address, Letting
+
+
+__all__ = ["Address", "Letting"]
