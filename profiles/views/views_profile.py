@@ -7,6 +7,7 @@ from profiles.models import Profile
 # Nullam laoreet consectetur ex, sed consequat libero pulvinar eget.
 # Fusc faucibus, urna quis auctor pharetra, massa dolor cursus neque, quis dictum lacus d
 def index(request):
+    """Return the home page of the profile app"""
     profiles_list = Profile.objects.all()
     context = {'profiles_list': profiles_list}
     return render(request, 'profiles/index.html', context)
@@ -19,6 +20,8 @@ def index(request):
 # Nam aliquam dignissim congue.
 # Pellentesque habitant morbi tristique senectus et netus et males
 def profile(request, username):
+    """return the profile page"""
+
     profile = Profile.objects.get(user__username=username)
     context = {'profile': profile}
     return render(request, 'profiles/profile.html', context)
