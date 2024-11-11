@@ -1,6 +1,7 @@
 import os
 
 import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 from dotenv import load_dotenv
 
 from pathlib import Path
@@ -121,16 +122,61 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static",]
 
 
-# Sentry monitoring
+# Sentry monitoring setup
 sentry_sdk.init(
     dsn=os.environ.get('SENTRY_DSN'),
-    # Set traces_sample_rate to 1.0 to capture 100%
-    # of transactions for tracing.
+    integrations=[DjangoIntegration()],
     traces_sample_rate=1.0,
     _experiments={
-        # Set continuous_profiling_auto_start to True
-        # to automatically start the profiler on when
-        # possible.
         "continuous_profiling_auto_start": True,
     },
 )
+
+# Logging configuration
+
+django_loggers = ('django', 'django.request', 'django.db.backends',
+                  'django.template', 'core', 'urllib3', 'asyncio')
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': '{levelname} {asctime} | in {module} | message: {message}',
+            'style': '{',
+        },
+
+    },
+    'root': {
+        'level': 'DEBUG',
+        'handlers': ['console'],
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard',
+        },
+        'sentry': {
+            'level': 'WARNING',
+            'class': 'sentry_sdk.integrations.logging.EventHandler',
+        },
+    },
+    'loggers': {
+        **{logger_name: {'level': 'WARNING', 'propagate': True} for logger_name in django_loggers},
+        'oc_lettings_site': {  # Main app logger
+            'level': 'DEBUG',
+            'handlers': ['console', 'sentry'],
+            'propagate': False,
+        },
+        'lettings': {
+            'level': 'DEBUG',
+            'handlers': ['console', 'sentry'],
+            'propagate': False,
+        },
+        'profiles': {
+            'level': 'DEBUG',
+            'handlers': ['console', 'sentry'],
+            'propagate': False,
+        },
+    },
+}

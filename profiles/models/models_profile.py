@@ -1,5 +1,9 @@
+import logging
+
 from django.db import models
 from django.contrib.auth.models import User
+
+logger = logging.getLogger('oc_lettings_site')
 
 
 class Profile(models.Model):
@@ -18,3 +22,12 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    def save(self, *args, **kwargs):
+
+        try:
+            super().save(*args, **kwargs)
+            logger.info(f"Profile for user {self.user.username} saved successfully")
+        except Exception:
+            logger.error(f"Error saving profile for user {self.user.username}", exc_info=True)
+            raise
