@@ -1,5 +1,10 @@
+import logging
+
 from django.db import models
 from django.core.validators import MaxValueValidator, MinLengthValidator
+
+
+logger = logging.getLogger('oc_lettings_site')
 
 
 class Address(models.Model):
@@ -32,6 +37,14 @@ class Address(models.Model):
     def __str__(self):
         return f'{self.number} {self.street}'
 
+    def save(self, *args, **kwargs):
+        try:
+            super().save(*args, **kwargs)
+            logger.info(f"Address {self} saved successfully")
+        except Exception:
+            logger.error(f"Error saving address: {self}", exc_info=True)
+            raise
+
     class Meta:
         verbose_name_plural = "addresses"
 
@@ -53,3 +66,11 @@ class Letting(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        try:
+            super().save(*args, **kwargs)
+            logger.info(f"Letting '{self.title}' saved successfully")
+        except Exception:
+            logger.error(f"Error saving letting '{self.title}'", exc_info=True)
+            raise
