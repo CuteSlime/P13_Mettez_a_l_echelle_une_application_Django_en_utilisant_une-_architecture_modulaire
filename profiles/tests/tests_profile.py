@@ -21,3 +21,14 @@ def test_code_200_profile(client, sample_data):
     response = client.get(reverse("profile", kwargs={"username": profile.user.username}))
     assert response.status_code == 200
     assert f"<title>{profile.user.username}</title>" in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_code_404_profile(client, sample_data):
+
+    profile = Profile.objects.filter(user__username="donotexist").first()
+    assert profile is None, "Profile with id=99 exist in the test data."
+
+    response = client.get(reverse("profile", kwargs={"username": "donotexist"}))
+    assert response.status_code == 404
+    assert "<title>404</title>" in response.content.decode()
