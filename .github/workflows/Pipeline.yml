@@ -30,8 +30,8 @@ jobs:
         env:
           CI: true
           SECRET_KEY: "something"
-          DEBUG: ${{secrets.DEBUG}}
-          SENTRY_DSN: ${{secrets.SENTRY_DSN}}
+          DEBUG: ${{ secrets.DEBUG }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
         run: |
           pytest --cov=./ --cov-fail-under=80
 
