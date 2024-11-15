@@ -34,7 +34,9 @@ jobs:
           DEBUG: ${{ secrets.DEBUG }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
         run: |
-          pytest --cov=./ --cov-fail-under=80
+          coverage run -m pytest
+          coverage report --fail-under=80
+          coverage html
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
