@@ -1,0 +1,13 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: oc-lettings-site:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./oc-lettings-site.sqlite3:/app/oc-lettings-site.sqlite3
+      - ./static:/app/static
+    env_file:
+      - .env
