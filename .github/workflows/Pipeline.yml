@@ -67,3 +67,19 @@ jobs:
       - name: Push Docker image to Docker Hub
         run: |
           docker push cuteslime/oc-lettings-site:${{ github.sha }}
+  
+  deploy:
+    runs-on: ubuntu-latest
+    needs: containerize
+    if: github.ref == 'refs/heads/QA'
+    steps:
+      - name: Deploy to Render
+        run: |
+          curl -X POST \
+          -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "serviceId": "srv-csvji4m8ii6s73eu5tk0",
+            "dockerImage": "cuteslime/oc-lettings-site:${{ github.sha }}"
+          }' \
+          https://api.render.com/v1/services/srv-csvji4m8ii6s73eu5tk0/deploys
