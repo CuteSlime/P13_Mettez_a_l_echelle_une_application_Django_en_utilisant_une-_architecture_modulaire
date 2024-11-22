@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
       
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5.3.0
         with:
           python-version: '3.12'
           cache: 'pip'
@@ -40,7 +40,7 @@ jobs:
           coverage html
 
       - name: Upload coverage report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.4.3
         with:
           name: coverage-report
           path: ./htmlcov
@@ -51,7 +51,7 @@ jobs:
     if: github.ref == 'refs/heads/QA'
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
       
       - name: Log in to Docker Hub
         uses: docker/login-action@v3.3.0
