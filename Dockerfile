@@ -14,6 +14,7 @@ RUN pip install --upgrade pip \
 COPY . /app/
 
 RUN python manage.py collectstatic --noinput
+RUN python manage.py migrate
 
 EXPOSE 8000
 
