@@ -77,17 +77,22 @@ jobs:
     steps:
       - name: Update Docker Image and Trigger Redeployment on Render
         run: |
-          curl -X PATCH \
-          -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-          -H "Content-Type: application/json" \
-          -d '{
+          curl --request PATCH \
+           --url https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}\
+           --header 'accept: application/json' \
+           --header 'authorization: Bearer ${{ secrets.RENDER_API_KEY }}' \
+           --header 'content-type: application/json' \
+           --data '
+          {
+            "autoDeploy": "yes",
+            "image": {
+              "imagePath": "docker.io/cuteslime/oc-lettings-site:${{ github.sha }}"
+            },
             "serviceDetails": {
-              "id": "${{ secrets.RENDER_SERVICE_ID }}",
-              "dockerImage": "cuteslime/oc-lettings-site:${{ github.sha }}"
+              "pullRequestPreviewsEnabled": "no",
+              "previews": {
+                "generation": "off"
+              }
             }
-          }' https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }} && \
-          echo "Image updated successfully. Triggering redeployment..." && \
-          curl -X POST \
-          -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-          -H "Content-Type: application/json" \
-          https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys
+          }
+          '
