@@ -83,5 +83,6 @@ jobs:
           -d '{
             "serviceId": "${{ secrets.RENDER_SERVICE_ID }}",
             "dockerImage": "cuteslime/oc-lettings-site:${{ github.sha }}"
+            "clearCache": true
           }' \
           https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys
