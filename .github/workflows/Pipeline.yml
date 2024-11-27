@@ -79,7 +79,7 @@ jobs:
           -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
           -H "Content-Type: application/json" \
           -d '{
-            "serviceId": "srv-csvji4m8ii6s73eu5tk0",
+            "serviceId": "${{ secrets.RENDER_SERVICE_ID }}",
             "dockerImage": "cuteslime/oc-lettings-site:${{ github.sha }}"
           }' \
-          https://api.render.com/v1/services/srv-csvji4m8ii6s73eu5tk0/deploys
+          https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys
