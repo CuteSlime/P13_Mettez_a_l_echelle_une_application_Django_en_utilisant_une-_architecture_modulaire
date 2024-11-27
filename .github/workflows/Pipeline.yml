@@ -82,7 +82,6 @@ jobs:
           -H "Content-Type: application/json" \
           -d '{
             "serviceId": "${{ secrets.RENDER_SERVICE_ID }}",
-            "dockerImage": "cuteslime/oc-lettings-site:${{ github.sha }}",
-            "clearCache": true
+            "dockerImage": "cuteslime/oc-lettings-site:${{ github.sha }}"
           }' \
           https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys
