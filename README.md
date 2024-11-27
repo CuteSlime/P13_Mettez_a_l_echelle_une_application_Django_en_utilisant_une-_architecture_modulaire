@@ -79,6 +79,7 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 ## Déploiement
 
 Le déploiement du site Orange County Lettings est automatisé via un pipeline CI/CD configuré sur GitHub Actions. 
+
 Ce pipeline permet de tester, conteneuriser et déployer l’application sur la plateforme Render.
 
 ### Récapitulatif du Déploiement
@@ -90,11 +91,15 @@ Ce pipeline permet de tester, conteneuriser et déployer l’application sur la 
 
 #### Conteneurisation
 
-Si tous les tests sont réussis et qu'il s'agit de la branche QA ou master, une image Docker de l’application est construite et poussée vers Docker Hub. L’image est étiquetée avec le hash de commit correspondant ({{github.sha}}), garantissant que chaque version est unique.
+Si tous les tests sont réussis et qu'il s'agit de la branche QA ou master, une image Docker de l’application est construite et poussée vers Docker Hub. 
+
+L’image est étiquetée avec le hash de commit correspondant ({{github.sha}}), garantissant que chaque version est unique.
 
 #### Déploiement sur Render
 
-Une fois l’image Docker disponible sur Docker Hub, le pipeline déclenche le déploiement sur Render, où l’application est mise en production. Seuls les commits sur la branche master déclenchent cette étape.
+Une fois l’image Docker disponible sur Docker Hub, le pipeline déclenche le déploiement sur Render, où l’application est mise en production. 
+
+Seuls les commits sur la branche master déclenchent cette étape.
 
 ### Configuration Requise pour le Déploiement
 
@@ -103,13 +108,13 @@ Pour que le déploiement fonctionne correctement, les éléments suivants doiven
 #### Secrets GitHub
 
 Le projet utilise des secrets pour sécuriser l’accès aux services externes :
-    - DEBUG : Mode debug True ou False.
-    - SENTRY_DSN : URL de connexion pour le suivi des erreurs via Sentry.
-    - ALLOWED_HOSTS : la liste des hebergeur autorisé, séparé par une virgule.
-    - DOCKER_USERNAME : Nom d’utilisateur Docker Hub.
-    - DOCKER_PASSWORD : Mot de passe Docker Hub.
-    - RENDER_API_KEY : Clé API pour déployer sur Render. (voir section suivante)
-    - RENDER_SERVICE_ID : le service id du serveur Render. (voir section suivante)
+- DEBUG : Mode debug True ou False.
+- SENTRY_DSN : URL de connexion pour le suivi des erreurs via Sentry.
+- ALLOWED_HOSTS : la liste des hebergeur autorisé, séparé par une virgule.
+- DOCKER_USERNAME : Nom d’utilisateur Docker Hub.
+- DOCKER_PASSWORD : Mot de passe Docker Hub.
+- RENDER_API_KEY : Clé API pour déployer sur Render. (voir section suivante)
+- RENDER_SERVICE_ID : le service id du serveur Render. (voir section suivante)
 
 #### Configuration Render
 
@@ -119,34 +124,40 @@ Un service web Docker doit être configuré sur Render pour recevoir l’image D
 
 #### Configurer le service sur Render
 
-  Créez un nouveau Web Service sur Render.
-  Choisissez Existing Image comme source et configurez le service pour utiliser l’image Docker de votre projet (l'image sera géré par le pipeline une fois configuré).
-  Configurer un Disk pour la base de donnée.
-  Dans les option du compte allez créer une clé API (qui iras dans la variable RENDER_API_KEY).
-  Votre Service ID et trouvable dans l'url du projet render et devrais resembler à quelque chose comme ça srv-csvji4m8ii6s73eu6tk2 (il est aussi possible de le voir dans la section SSH du menu connect).
+Créez un nouveau Web Service sur Render.
+
+Choisissez Existing Image comme source et configurez le service pour utiliser l’image Docker de votre projet (l'image sera géré par le pipeline une fois configuré).
+
+Configurer un Disk pour la base de donnée.
+
+Dans les option du compte allez créer une clé API (qui iras dans la variable RENDER_API_KEY).
+
+Votre Service ID et trouvable dans l'url du projet render et devrais resembler à quelque chose comme ça srv-csvji4m8ii6s73eu6tk2 (il est aussi possible de le voir dans la section SSH du menu connect).
+
+Ajoutez les variables d’environnement nécessaires (voir la section précédente).
+- ALLOWED_HOSTS : adresse autorisé (la ou les adresses ou le site peut être accessible, séparer par des virgule.).
+- SECRET_KEY : La clé secrète Django.
+- DEBUG : False en production.
+- SENTRY_DSN : Pour le suivi des erreurs via Sentry.
+- PORT : 8000
+- DB_PATH : chemin vers la DB sur le disk.
   
-  Ajoutez les variables d’environnement nécessaires (voir la section précédente).
-    - ALLOWED_HOSTS : adresse autorisé (la ou les adresses ou le site peut être accessible, séparer par des virgule.).
-    - SECRET_KEY : La clé secrète Django.
-    - DEBUG : False en production.
-    - SENTRY_DSN : Pour le suivi des erreurs via Sentry.
-    - PORT : 8000
-    - DB_PATH : chemin vers la DB sur le disk.
-    
-  Assurez-vous que le port est configuré à 8000.
+Assurez-vous que le port est configuré à 8000.
 
 #### Déployer depuis GitHub
 
-  Poussez vos modifications sur la branche master de votre repository GitHub.
-  Le pipeline GitHub Actions sera automatiquement déclenché :
-      Étape 1 : Les tests et le linting sont exécutés.
-      Étape 2 : Si les tests sont réussis, une nouvelle image Docker est construite et poussée sur Docker Hub.
-      Étape 3 : Render est informé de l’image mise à jour et déploie automatiquement la nouvelle version de l’application.
+Poussez vos modifications sur la branche master de votre repository GitHub.
+
+Le pipeline GitHub Actions sera automatiquement déclenché :
+- Étape 1 : Les tests et le linting sont exécutés.
+- Étape 2 : Si les tests sont réussis, une nouvelle image Docker est construite et poussée sur Docker Hub.
+- Étape 3 : Render est informé de l’image mise à jour et déploie automatiquement la nouvelle version de l’application.
 
 #### Vérifier le déploiement
 
-  Une fois le déploiement terminé, rendez-vous sur l’URL de votre service Render.
-  Vérifiez que :
-      Le site est accessible.
-      Les fichiers statiques (CSS, JS) sont correctement chargés.
-      Le panel d’administration est fonctionnel.
+Une fois le déploiement terminé, rendez-vous sur l’URL de votre service Render.
+
+Vérifiez que :
+- Le site est accessible.
+- Les fichiers statiques (CSS, JS) sont correctement chargés.
+- Le panel d’administration est fonctionnel.
