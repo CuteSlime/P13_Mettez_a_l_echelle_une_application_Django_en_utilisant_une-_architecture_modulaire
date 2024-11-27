@@ -75,7 +75,7 @@ jobs:
     needs: containerize
     if: github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch'
     steps:
-      - name: Update Docker Image and Trigger Redeployment on Render
+      - name: Update Docker Image
         run: |
           curl --request PATCH \
            --url https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}\
@@ -96,3 +96,15 @@ jobs:
             }
           }
           '
+      - name: Trigger Redeployment on Render
+        run: |
+          curl --request POST \
+           --url https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys \
+           --header 'accept: application/json' \
+           --header 'authorization: Bearer ${{ secrets.RENDER_API_KEY }}' \
+           --header 'content-type: application/json' \
+           --data '
+            {
+              "clearCache": "clear",
+            }
+            '
