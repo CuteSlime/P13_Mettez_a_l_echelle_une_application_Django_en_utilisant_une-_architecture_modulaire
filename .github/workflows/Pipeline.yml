@@ -75,13 +75,19 @@ jobs:
     needs: containerize
     if: github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch'
     steps:
-      - name: Deploy to Render
+      - name: Update Docker Image and Trigger Redeployment on Render
         run: |
-          curl -X POST \
+          curl -X PATCH \
           -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
           -H "Content-Type: application/json" \
           -d '{
-            "serviceId": "${{ secrets.RENDER_SERVICE_ID }}",
-            "dockerImage": "cuteslime/oc-lettings-site:${{ github.sha }}"
-          }' \
+            "serviceDetails": {
+              "id": "${{ secrets.RENDER_SERVICE_ID }}",
+              "dockerImage": "cuteslime/oc-lettings-site:${{ github.sha }}"
+            }
+          }' https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }} && \
+          echo "Image updated successfully. Triggering redeployment..." && \
+          curl -X POST \
+          -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+          -H "Content-Type: application/json" \
           https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys
