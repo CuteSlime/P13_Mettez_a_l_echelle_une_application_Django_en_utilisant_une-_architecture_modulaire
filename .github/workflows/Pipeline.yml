@@ -105,6 +105,6 @@ jobs:
            --header 'content-type: application/json' \
            --data '
             {
-              "clearCache": "clear",
+              "clearCache": "clear"
             }
             '
