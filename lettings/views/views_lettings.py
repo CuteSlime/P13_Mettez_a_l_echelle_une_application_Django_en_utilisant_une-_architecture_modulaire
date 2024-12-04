@@ -15,7 +15,10 @@ logger = logging.getLogger('lettings')
 
 
 def index(request):
-    """Return the home page of the letting app"""
+    """Return the home page of the letting app
+
+        **URL:** /lettings/
+    """
 
     try:
         lettings_list = Letting.objects.all()
@@ -42,7 +45,10 @@ def index(request):
 # Mauris condimentum auctor elementum.
 # Donec quis nisi ligula. Integer vehicula tincidunt enim, ac lacinia augue pulvinar sit amet.
 def letting(request, letting_id):
-    """return the letting page"""
+    """return the letting page
+
+        **URL:** /lettings/<letting_id>/
+    """
     try:
         letting = get_object_or_404(Letting, id=letting_id)
 
