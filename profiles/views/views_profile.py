@@ -13,7 +13,11 @@ logger = logging.getLogger('profiles')
 
 
 def index(request):
-    """Return the home page of the profile app"""
+    """Return the home page of the profile app
+
+        **URL:** /profiles/
+    """
+
     try:
         profiles_list = Profile.objects.all()
     except Exception:
@@ -31,7 +35,11 @@ def index(request):
 # Nam aliquam dignissim congue.
 # Pellentesque habitant morbi tristique senectus et netus et males
 def profile(request, username):
-    """return the profile page"""
+    """return the profile page
+
+        **URL:** /profiles/<username>/
+    """
+
     try:
         profile = get_object_or_404(Profile, user__username=username)
     except (Profile.DoesNotExist, Http404):

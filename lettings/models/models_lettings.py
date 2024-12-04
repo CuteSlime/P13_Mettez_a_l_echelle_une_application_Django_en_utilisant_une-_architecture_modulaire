@@ -11,28 +11,35 @@ class Address(models.Model):
     """
     Model representing the location details.
 
-    Attributes:
-        number (PositiveIntegerField): The building number in the address.
-        street (CharField): The street name of the address.
-        city (CharField): The city name of the address.
-        state (CharField): The two-letter state codes.
-        zip_code (PositiveIntegerField): The postal code of the address.
-        country_iso_code (CharField): The 3-letter ISO country code.
-
     Methods:
         __str__(): Returns a string representation of the address.
+        save(): Overrides the default save method to log successful saves and errors.
 
     Meta:
         verbose_name_plural (str): Specifies the plural name for the model
-                                   in the admin interface.
+        in the admin interface.
     """
 
-    number = models.PositiveIntegerField(validators=[MaxValueValidator(9999)])
-    street = models.CharField(max_length=64)
-    city = models.CharField(max_length=64)
-    state = models.CharField(max_length=2, validators=[MinLengthValidator(2)])
-    zip_code = models.PositiveIntegerField(validators=[MaxValueValidator(99999)])
-    country_iso_code = models.CharField(max_length=3, validators=[MinLengthValidator(3)])
+    number = models.PositiveIntegerField(validators=[MaxValueValidator(9999)],
+                                         verbose_name="Street number"
+                                         )
+    street = models.CharField(max_length=64,
+                              verbose_name="Street name"
+                              )
+    city = models.CharField(max_length=64,
+                            verbose_name="City name"
+                            )
+    state = models.CharField(max_length=2,
+                             validators=[MinLengthValidator(2)],
+                             verbose_name="Two-letter state code"
+                             )
+    zip_code = models.PositiveIntegerField(validators=[MaxValueValidator(99999)],
+                                           verbose_name="Zip code"
+                                           )
+    country_iso_code = models.CharField(max_length=3,
+                                        validators=[MinLengthValidator(3)],
+                                        verbose_name="Country iso code"
+                                        )
 
     def __str__(self):
         return f'{self.number} {self.street}'
@@ -59,6 +66,7 @@ class Letting(models.Model):
 
     Methods:
         __str__(): Returns a string representation of the letting, using its title.
+        save(): Overrides the default save method to log successful saves and errors.
     """
 
     title = models.CharField(max_length=256)
