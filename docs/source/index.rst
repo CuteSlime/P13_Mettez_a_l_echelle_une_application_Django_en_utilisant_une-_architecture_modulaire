@@ -48,6 +48,7 @@ For detailed installation instructions, see the :doc:`full_install`.
 
    quick_start
    full_install
+   user_case
    oc_lettings_site/oc_lettings_site
    lettings/lettings
    profiles/profiles
