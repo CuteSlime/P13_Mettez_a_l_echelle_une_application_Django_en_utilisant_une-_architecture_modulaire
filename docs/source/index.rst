@@ -28,7 +28,7 @@ The database structure for the project is as follows:
 App structure
 -------------
 
-The app have a main app called oc_lettings_site and 2 sub apps called lettings and profiles.
+The app has a main app called oc_lettings_site and 2 sub apps called lettings and profiles.
 You can find the structure of each app on the sidebar.
 
 
@@ -48,6 +48,7 @@ For detailed installation instructions, see the :doc:`full_install`.
 
    quick_start
    full_install
+   user_case
    oc_lettings_site/oc_lettings_site
    lettings/lettings
    profiles/profiles

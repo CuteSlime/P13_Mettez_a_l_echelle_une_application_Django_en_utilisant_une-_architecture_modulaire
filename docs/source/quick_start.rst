@@ -21,7 +21,7 @@ Run the following commands in your terminal:
 .. code-block:: bash
 
    cd /path/to/put/project/in
-   git clone https://github.com/OpenClassrooms-Student-Center/Python-OC-Lettings-FR.git
+   git clone https://github.com/CuteSlime/P13_Mettez_a_l_echelle_une_application_Django_en_utilisant_une-_architecture_modulaire.git
 
 Create and Activate a Virtual Environment
 -----------------------------------------
@@ -75,17 +75,17 @@ Run the Website
 
       pip install --requirement requirements.txt
 
-2. Run the Django development server:
-
-   .. code-block:: bash
-
-      python manage.py runserver
-
-3. make sure that the DB is up to date:
+2. make sure that the DB is up to date:
 
    .. code-block:: bash
 
       python manage.py migrate
+
+3. Run the Django development server:
+
+   .. code-block:: bash
+
+      python manage.py runserver
 
 4. Open a web browser and navigate to `http://localhost:8000` to verify the website is running.
 
