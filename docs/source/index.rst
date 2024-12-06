@@ -28,7 +28,7 @@ The database structure for the project is as follows:
 App structure
 -------------
 
-The app have a main app called oc_lettings_site and 2 sub apps called lettings and profiles.
+The app has a main app called oc_lettings_site and 2 sub apps called lettings and profiles.
 You can find the structure of each app on the sidebar.
 
 

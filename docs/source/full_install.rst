@@ -21,7 +21,7 @@ for base install refer to :doc:`quick_start`.
 Database Management
 -------------------
 
-1. Open a SQLite3 session:
+1. In the project folder, open a SQLite3 session:
 
    .. code-block:: bash
 
@@ -33,11 +33,17 @@ Database Management
 
       .tables
 
+3. Query the profiles table info:
+
+   .. code-block:: sql
+
+      pragma table_info(profiles_profile);
+
 3. Query the profiles table:
 
    .. code-block:: sql
 
-      select user_id, favorite_city from Python-OC-Lettings-FR_profile where favorite_city like 'B%';
+      select user_id, favorite_city from profiles_profile where favorite_city like 'B%';
 
 4. Exit the session:
 
@@ -69,6 +75,7 @@ Configure the following secrets in GitHub:
 - `ALLOWED_HOSTS`: List of allowed hostnames.
 - `DOCKER_USERNAME` and `DOCKER_PASSWORD`: Docker Hub credentials.
 - `RENDER_API_KEY`: Render API key for deployment.
+- `RENDER_SERVICE_ID`: Render service ID for deployment.
 
 Deployment on Render
 --------------------
