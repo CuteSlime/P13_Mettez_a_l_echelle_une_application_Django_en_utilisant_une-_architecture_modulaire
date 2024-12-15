@@ -32,6 +32,13 @@ Dans le reste de la documentation sur le développement local, il est supposé q
 - Confirmer que la commande `pip` exécute l'exécutable pip dans l'environnement virtuel, `which pip`
 - Pour désactiver l'environnement, `deactivate`
 
+#### Créer un fichier .env et ajoutez les variables d’environnement nécessaires.
+
+- ALLOWED_HOSTS : adresse autorisé (la ou les adresses ou le site peut être accessible, séparer par des virgule.).
+- SECRET_KEY : La clé secrète Django.
+- DEBUG : True en local.
+- SENTRY_DSN : Pour le suivi des erreurs via Sentry.
+
 #### Exécuter le site
 
 - `cd /path/to/Python-OC-Lettings-FR`

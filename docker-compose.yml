@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: oc-lettings-site:latest
+    image: oc-lettings-site:${DOCKER_TAG}
     ports:
       - "8000:8000"
     volumes:
