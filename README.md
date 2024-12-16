@@ -102,6 +102,28 @@ Si tous les tests sont réussis et qu'il s'agit de la branche QA ou master, une 
 
 L’image est étiquetée avec le hash de commit correspondant ({{github.sha}}), garantissant que chaque version est unique.
 
+#### Déploiement en local
+
+Une fois l'image Docker disponible sur Docker Hub, Il est possible de déployé le conteneur localement.
+
+Pour ce faire il suffit d'allez récupérer la commande dédier a notre image sur Docker Hub:
+
+```bash
+docker pull cuteslime/oc-lettings-site:<le tag correspondant>
+```
+ensuite utilisé ce tag pour remplir la variable d'environement:
+
+```bash
+$env:DOCKER_TAG="votre tag"
+```
+
+et lancer le déployement avec le docker compose:
+
+```bash
+docker-compose up
+```
+Votre image devrais maintenant ce lancer et vous pourrez voire le site en local à l'adresse `127.0.0.1:8000`
+
 #### Déploiement sur Render
 
 Une fois l’image Docker disponible sur Docker Hub, le pipeline déclenche le déploiement sur Render, où l’application est mise en production.
