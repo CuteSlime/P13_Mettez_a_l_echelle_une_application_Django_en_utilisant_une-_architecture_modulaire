@@ -77,6 +77,31 @@ Configure the following secrets in GitHub:
 - `RENDER_API_KEY`: Render API key for deployment.
 - `RENDER_SERVICE_ID`: Render service ID for deployment.
 
+Deployment on Local using Docker Image
+--------------------
+
+1. Go to Docker Hub in your image folder and the tag tab.
+2. copy the pull code given (with the tag at the end).
+3. paste it in your terminal:
+   
+   .. code-block:: bash
+
+      docker pull cuteslime/oc-lettings-site:<the tag>
+
+4. use the tag to fill DOCKER_TAG env variable:
+
+   .. code-block:: bash
+
+      $env:DOCKER_TAG="your tag"
+
+5. launch Docker compose file:
+
+   .. code-block:: bash
+
+      docker-compose up
+
+When the image is running you can access it at `127.0.0.1:8000`
+
 Deployment on Render
 --------------------
 
