@@ -81,6 +81,12 @@ Run the Website
 
       python manage.py migrate
 
+3. Create a .env file with your environment variable:
+    - ALLOWED_HOSTS : list of autorized url (use ',' to indiquate multiple one).
+    - SECRET_KEY : DJANGO secret key for debug.
+    - DEBUG : True for development.
+    - SENTRY_DSN : you Sentry DSN to have a monitoring of the app.
+
 3. Run the Django development server:
 
    .. code-block:: bash
