@@ -78,7 +78,7 @@ Configure the following secrets in GitHub:
 - `RENDER_SERVICE_ID`: Render service ID for deployment.
 
 Deployment on Local using Docker Image
---------------------
+--------------------------------------
 
 1. Go to Docker Hub in your image folder and the tag tab.
 2. copy the pull code given (with the tag at the end).
